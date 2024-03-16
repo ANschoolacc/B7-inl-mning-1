@@ -2,28 +2,24 @@ import {describe, expect, it} from '@jest/globals'
 
 import feedback from './feedback';
 
-/* Inputs: Två ord (två textsträngar)
-Ett ord som är gissningen
-Ett ord som är det korrekta ordet
+/*När jag gjort denna uppgift har jag försökt göra den enligt TDD.
+Jag skrev ett test i taget och därefter skrev logiken till det tills testet gick igenom.
+Jag försökte även följa fyrstegsmetoden under mitt arbete med de enskilda stegen.
 
-Funktionalitet: Kontrollera vilka bokstäver från det ena ordet som förekommer i det andra och i så fall var
+Min stratergi var följande:
+1.Validering. Så man inte kan mata in något annat än datatypen string med bokstäverna A-Ö.
 
-Output: En array med objekt, ett för varje bokstav i samma ordning som de förekommer i det gissade ordet, med följande attribut:
-letter (bokstaven)
-result (ett av följande värden)
-‘incorrect’: Finns inte med i det andra ordet
-‘misplaced’: Finns med i det andra ordet, men på annan plats
-‘correct’: Korrekt plats i det andra ordet 
-Exempel:
+2.Se till att få tillbaks "correct" och "incorrect" som result-attribut ifall svaret och gissningens bokstäver stämmer eller inte.Obs! På denna punkt såg jag även till att gissning och svar alltid blir till versaler.
 
-Orden “CYKLA” (utvalt) och “HALLÅ” (gissning) skulle ge följande tillbaka:
-H / incorrect
-A / misplaced
-L / incorrect (eftersom det redan finns ett korrekt L)
-L / correct
-Å / incorrect*/
+3.Se till att bokstäver får result attributet "misplaced" ifall de finns i ordet men är på fel plats. 
+
+4. Se till att logiken fungerar med inputs som: svar:"CYKEL" och gissning:"HALLÅ", där det L som inte är på rätt plats ska ha result-attribut som "incorrect" då "correct" redan är hittats och det inte finns fler av den bokstaven.
+
+Utifrån vad jag kan komma på är mina test heltäckande efter att ha följt dessa steg.
+*/
 
 describe('feedback()', () => {
+ 
   it('If guess input is empty, return empty array', () => {
     const output = feedback('', 'WORD');
     expect(output).toEqual([]);
@@ -45,7 +41,7 @@ describe('feedback()', () => {
   })
 
   it('If guess is not capitalized. Make it capitalized.', () => {
-    const output = feedback('shelf', 'SHELF');
+    const output = feedback('sHelf', 'SHeLF');
     expect(output).toEqual([
     {letter:'S', result:'correct'},
     {letter:'H', result:'correct'},
@@ -87,7 +83,7 @@ describe('feedback()', () => {
     ]);
   });
 
-  it('If letters has already been identified as correct and there are no more of that letter in answer but multiple in guess', () => {
+  it('If letter has already been identified as correct and there are no more of that letter in answer but multiple in guess, then make that letters result incorrect', () => {
     const output = feedback('HALLÅ', 'CYKLA');
     expect(output).toEqual([
       {letter:'H', result:'incorrect'},
@@ -97,29 +93,4 @@ describe('feedback()', () => {
       {letter:'Å', result:'incorrect'}
     ]);
   });
-
-  it('if input is to many letters return object with correct info', () => {
-    const output = feedback('WORDS', 'WORD');
-    expect(output).toEqual([
-      {INFO: 'You are using to many letters!'},
-      {letter:'W', result:'correct'},
-      {letter:'O', result:'correct'},
-      {letter:'R', result:'correct'},
-      {letter:'D', result:'correct'},
-      {letter:'S', result:'incorrect'}
-      
-    ])
-  })
-
-  it('if input is to few letters return object with correct info', () => {
-    const output = feedback('WORD', 'WORDS');
-    expect(output).toEqual([
-      {INFO: 'You are using to few letters!'},
-      {letter:'W', result:'correct'},
-      {letter:'O', result:'correct'},
-      {letter:'R', result:'correct'},
-      {letter:'D', result:'correct'}
-      
-    ])
-  })
 })

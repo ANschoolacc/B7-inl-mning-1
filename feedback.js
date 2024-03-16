@@ -1,6 +1,7 @@
 
 export default function feedback(guess, answer) {
   let result = [];
+
   if (!guess || !/^[a-öA-Ö]+$/.test(guess) || typeof guess != "string") {
     return result;
   }
@@ -28,18 +29,13 @@ export default function feedback(guess, answer) {
       });
       guessCount[guessArr[i]]--;
       answerCount[guessArr[i]]--;
+      
     } else {
       result.push({
         letter: guessArr[i],
         result: "incorrect"
       });
     }
-  }
-
-  if (result.length > answerArr.length) {
-    result.push({ INFO: "You are using to many letters!" });
-  } else if (result.length < answerArr.length) {
-    result.push({ INFO: "You are using to few letters!" });
   }
   return result.reverse();
 }
