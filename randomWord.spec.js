@@ -24,8 +24,19 @@ describe('randomWord()',() => {
 
   it('Return random word from list with three letters', () => {
     const output = randomWord(list, 3, true);
+    if(output != 'HUS' && output !='NOD'){
+      console.log(output)
+    expect(output).toBe('BAS');
+  } else if(output != 'BAS' && output != 'HUS'){
+    expect(output).toBe('NOD');
+  }else if(output != 'BAS' && output != 'NOD'){
     expect(output).toBe('HUS');
+  }
   });
 })
 
-const list = ['BABBEL', 'CYKEL', 'HUS', 'HALLÅ', 'HUND', 'KATT', 'VARULV','BAS' ,'TE', 'KORRIDOR', 'ABBORRE','ADVOKAT']
+const list = ['BABBEL', 'CYKEL', 'HUS', 'HALLÅ', 'HUND', 'KATT', 'VARULV','BAS' ,'TE', 'KORRIDOR', 'ABBORRE','ADVOKAT', 'NOD'];
+
+async function expectOr(){
+
+}
