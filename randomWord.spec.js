@@ -13,8 +13,9 @@ Output: Det slumpmässigt utvalda ordet
 
 1.Få tillbaks en sträng
 2.Skicka in en lista med ord och en siffra för hur många bokstäver ordet får vara. Få tillbaka ett ord med rätt längd ur listan.
-3.Skicka in en lista med ord och en siffra för hur många bokstäver ordet får vara samt en indikator ifall alla bostäver måste vara unika. Om indikation för unika bostäver är true: Få tillbaka ett ord ur listan med rätt längd innehållande endast unika bokstäver .
-4.
+3.Skicka in en lista med ord och en siffra för hur många bokstäver ordet får vara samt en indikator ifall alla bostäver måste vara unika. Om indikation för unika bostäver är true: Få tillbaka ett ord ur listan med rätt längd innehållande endast unika bokstäver.
+4. Om det inte finns en lista att hämta eller om inget ord matchar kriterierna i input så ska output innehålla ett error meddelande.
+
 */
 describe('randomWord()', () => {
   it('Always return type of string as output', () => {
@@ -51,7 +52,6 @@ describe('randomWord()', () => {
   it('Test that random word can only contain one instance of same letter', () => {
     for (let i = 0; i < 4; i++) {
       const output = randomWord(list, 5, true);
-      console.log(output)
       if (output != 'CYKEL') {
         expect(output).toBe('AGENT');
       } else if (output != 'AGENT') {
@@ -60,6 +60,30 @@ describe('randomWord()', () => {
     }
   });
 
+  it('If there are no matching words for input parameters. Output should throw error with message', () => {
+    const output = () => {
+      randomWord(list, 7, true)
+    }
+    expect(output).toThrow(Error);
+    expect(output).toThrow('No valid word matching criteria!');
+  })
+
+  it('If there are no words found on server. Output should throw error with message.', () => {
+    const output = () => {
+      randomWord([],7, true)
+    }
+    expect(output).toThrow('No words found on server!');
+    expect(output).toThrow(Error);
+  })
+
+  it('If there are no words found on server. Output should throw error with message.', () => {
+    const output = () => {
+      randomWord(undefined, 7, true)
+    }
+    expect(output).toThrow('No words found on server!');
+    expect(output).toThrow(Error);
+  })
+
 })
 
-const list = ['BABBEL', 'CYKEL', 'HUS', 'HALLÅ', 'HUND', 'KATT', 'VARULV', 'BAS', 'TE', 'KORRIDOR', 'ABBORRE', 'ADVOKAT', 'NOD', 'AGENT'];
+const list = ['BABBEL', 'CYKEL', 'HUS', 'HALLÅ', 'HUND', 'KATT', 'VARULV', 'BAS', 'te', 'KORRIDOR','AGGREGAT', 'ABBORRE', 'ADVOKAT', 'NOD', 'AGENT'];

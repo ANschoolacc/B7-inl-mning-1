@@ -1,17 +1,25 @@
-export default function randomWord(wordList, wordLength, uniqueLetters) {
-  const validList = wordList.filter((x) => x.length == wordLength);
 
-  for (let i = 0; i < validList.length; i++) {
+export default function randomWord(wordList, wordLength, uniqueLetters) {
+  if (!wordList || !wordList.length || typeof wordList === 'array') {
+    throw new Error('No words found on server!')
+  }
+  let validList = wordList.filter((x) => x.length == wordLength);
+
+  for (let i = validList.length - 1; i >= 0; i--) {
     const letters = validList[i].split("");
     let letterCount = {};
 
-    letters.forEach((letter) => {letterCount[letter] = (letterCount[letter] || 0) + 1;});
-    
-    if (Object.values(letterCount).some((x) => x > 1) && uniqueLetters === true) {
-      validList.splice(i, 1);
+    letters.forEach((letter) => { letterCount[letter] = (letterCount[letter] || 0) + 1; });
+
+    if (
+      Object.values(letterCount).some((x) => x > 1) && uniqueLetters === true) {
+      validList = validList.filter(item => item !== validList[i])
     }
   }
-
-  const word = validList[Math.floor(Math.random() * validList.length)];
-  return word;
+  if (!validList.length) {
+    throw new Error('No valid word matching criteria!')
+  } else {
+    const word = validList[Math.floor(Math.random() * validList.length)];
+    return word;
+  }
 }
