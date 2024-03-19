@@ -20,27 +20,27 @@ Utifrån vad jag kan komma på är mina test heltäckande efter att ha följt de
 
 describe('feedback()', () => {
  
-  it('If guess input is empty, return empty array', () => {
+  it('If guess input is empty: return empty array', () => {
     const output = feedback('', 'WORD');
     expect(output).toEqual([]);
   })
 
-  it('If guess is a number, return empty array', () => {
+  it('If guess is a number: return empty array', () => {
     const output = feedback(1, 'WORD');
     expect(output).toEqual([]);
   })
 
-  it('If guess is a string that contains a number, return empty array', () => {
+  it('If guess is a string that contains a number: return empty array', () => {
     const output = feedback('1', 'WORD');
     expect(output).toEqual([]);
   })
 
-  it('If guess is neither number or string, return empty array', () => {
+  it('If guess is neither number or string: return empty array', () => {
     const output = feedback(true, 'WORD');
     expect(output).toEqual([]);
   })
 
-  it('If guess is not capitalized. Make it capitalized.', () => {
+  it('If guess or answer are not capitalized: Make them capitalized.', () => {
     const output = feedback('sHelf', 'SHeLF');
     expect(output).toEqual([
     {letter:'S', result:'correct'},
@@ -51,7 +51,7 @@ describe('feedback()', () => {
   ])
   })
 
-  it('If guess and answer are same return array of objects containing attributes of each letter and result as correct', () => {
+  it('If guess and answer are same: return array of objects containing attributes of each letter and result as correct', () => {
     const output = feedback('WORD', 'WORD')
     expect(output).toEqual([
       {letter:'W', result:'correct'},
@@ -61,7 +61,7 @@ describe('feedback()', () => {
     ])
   })
 
-  it('If guess has no letters correct return array of objects containing attributes of each letter and result as incorrect', () => {
+  it('If guess has no letters correct: return array of objects containing attributes of each letter and result as incorrect', () => {
     const output = feedback('DUCKS', 'ALIEN');
     expect(output).toEqual([
       {letter:'D', result:'incorrect'},
@@ -72,7 +72,7 @@ describe('feedback()', () => {
     ]);
   })
 
-  it('If some of the letters in guess word are correct but in wrong place', () => {
+  it('If some of the letters in guess word are correct but in wrong place: return that letters result as misplaced', () => {
     const output = feedback('ALIEN', 'MILAN');
     expect(output).toEqual([
       {letter:'A', result:'misplaced'},
@@ -83,7 +83,7 @@ describe('feedback()', () => {
     ]);
   });
 
-  it('If letter has already been identified as correct and there are no more of that letter in answer but multiple in guess, then make that letters result incorrect', () => {
+  it('If letter has already been identified as correct and there are no more of that letter in answer but multiple in guess: make that letters result incorrect', () => {
     const output = feedback('HALLÅ', 'CYKLA');
     expect(output).toEqual([
       {letter:'H', result:'incorrect'},

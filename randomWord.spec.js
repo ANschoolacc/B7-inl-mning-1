@@ -2,20 +2,12 @@ import { describe, expect, it } from '@jest/globals';
 
 import randomWord from './randomWord';
 
-/*Inputs:
-En lista med ord
-En siffra som anger önskad längd
-En indikation på huruvida samma bokstav får förekomma mer än en gång i ordet, eller om alla bokstäver måste vara unika
-Funktionalitet:
-Välj slumpmässigt ut ett ord ur listan som uppfyller kriterierna i de övriga parametrarna
-Hantera på något väldefinierat sätt situationen som uppstår när inget passande ord finns
-Output: Det slumpmässigt utvalda ordet
-
-1.Få tillbaks en sträng
+/*
+Min stratergi var följande:
+1.Få tillbaks en sträng.
 2.Skicka in en lista med ord och en siffra för hur många bokstäver ordet får vara. Få tillbaka ett ord med rätt längd ur listan.
 3.Skicka in en lista med ord och en siffra för hur många bokstäver ordet får vara samt en indikator ifall alla bostäver måste vara unika. Om indikation för unika bostäver är true: Få tillbaka ett ord ur listan med rätt längd innehållande endast unika bokstäver.
 4. Om det inte finns en lista att hämta eller om inget ord matchar kriterierna i input så ska output innehålla ett error meddelande.
-
 */
 describe('randomWord()', () => {
   it('Always return type of string as output', () => {
@@ -23,7 +15,7 @@ describe('randomWord()', () => {
     expect(typeof output).toBe('string');
   });
 
-  it('Return random word from list with three letters', () => {
+  it('If input length criteria is three: Output should return random word from list with three letters', () => {
     for (let i = 0; i < 4; i++) {
       const output = randomWord(list, 3, true);
       if (output != 'HUS' && output != 'NOD') {
@@ -36,7 +28,7 @@ describe('randomWord()', () => {
     }
   });
 
-  it('Test that random word can contain more than one instance of same letter', () => {
+  it('If uniqueletters input criteria is false: Output should return a random word that matches length criteria.', () => {
     for (let i = 0; i < 4; i++) {
       const output = randomWord(list, 5, false);
       if (output != 'AGENT' && output != 'CYKEL') {
@@ -49,7 +41,7 @@ describe('randomWord()', () => {
     }
   });
 
-  it('Test that random word can only contain one instance of same letter', () => {
+  it('If uniqueletters input criteria is true: Output should return a random word that matches length criteria and only has unique letters.', () => {
     for (let i = 0; i < 4; i++) {
       const output = randomWord(list, 5, true);
       if (output != 'CYKEL') {
@@ -60,7 +52,7 @@ describe('randomWord()', () => {
     }
   });
 
-  it('If there are no matching words for input parameters. Output should throw error with message', () => {
+  it('If there are no matching words for input parameters: Output should throw error with message', () => {
     const output = () => {
       randomWord(list, 7, true)
     }
@@ -68,7 +60,7 @@ describe('randomWord()', () => {
     expect(output).toThrow('No valid word matching criteria!');
   })
 
-  it('If there are no words found on server. Output should throw error with message.', () => {
+  it('If there are no words found on server: Output should throw error with message.', () => {
     const output = () => {
       randomWord([],7, true)
     }
@@ -76,7 +68,7 @@ describe('randomWord()', () => {
     expect(output).toThrow(Error);
   })
 
-  it('If there are no words found on server. Output should throw error with message.', () => {
+  it('If list input is undefined or not type of array: Output should throw error with message.', () => {
     const output = () => {
       randomWord(undefined, 7, true)
     }
