@@ -1,6 +1,6 @@
 
 export default function randomWord(wordList, wordLength, uniqueLetters) {
-  if (!wordList || !wordList.length || typeof wordList === 'array') {
+  if (!wordList || !wordList.length || !Array.isArray(wordList)) {
     throw new Error('No words found on server!')
   }
   let validList = wordList.filter((x) => x.length == wordLength);
